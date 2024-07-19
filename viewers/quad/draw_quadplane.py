@@ -10,6 +10,7 @@ from message_types.msg_state import MsgState
 import pyqtgraph.opengl as gl
 
 
+
 class DrawQuadplane():
 
     #defines the initialization function
@@ -159,6 +160,26 @@ class DrawQuadplane():
         window.addItem(self.quad_horizontalStabilizer)        
         ################################################################################
 
+        ################################################################################
+        #cockpit
+        self.cockpitPoints, self.cockpitIndicies, self.cockpitStabilizer_meshColors = self.get_cockpit_points()
+        #position of the horizontal stabilizer
+        self.cockpitLocation = np.array([[-8.0*self.unit_length], [0.0*self.unit_length], [0.0*self.unit_length]])
+        #creates the vertical stabilizer object
+        self.quad_cockpit = self.add_object(self.cockpitPoints,
+                                                           self.cockpitIndicies,
+                                                           self.cockpitStabilizer_meshColors,
+                                                           R_bi,
+                                                           quad_position + R_bi @ self.horizontalStabilizerLocation)
+
+        #adds the item
+        window.addItem(self.quad_horizontalStabilizer)        
+        ################################################################################
+
+
+
+
+
     #creates the update function
     def update(self, state: MsgState):
 
@@ -289,8 +310,8 @@ class DrawQuadplane():
         self.bodyRight_y = 1.0*ul
         self.bodyLeft_y = -1.0*ul
         #the z dimensions
-        self.bodyDown_z = 1.0*ul
-        self.bodyUp_z = -1.0*ul
+        self.bodyDown_z = 0.5*ul # was 1.0 ^^^
+        self.bodyUp_z = -0.75*ul # was 1.0 ^^^
         #nose specifications
         self.noseLength_x = 4.0*ul
 
@@ -361,12 +382,12 @@ class DrawQuadplane():
         #inside aileron y
         inside_aileron_y = -3.0*ul
         #outside aileron y
-        outside_aileron_y = -6.0*ul
+        outside_aileron_y = -7.3*ul # was -6.0 ^^^
 
         #top z
-        top_z = -1.0*ul
+        top_z = -0.75*ul # was -1.0 ^^^
         #bottom z
-        bottom_z = 0.0*ul
+        bottom_z = -0.25*ul # was 0.0 ^^^
 
         #creates the points
         points = np.transpose(np.array([[front_x, inside_y, top_z],#point 0
@@ -461,7 +482,7 @@ class DrawQuadplane():
         #gets the front x
         front_x = 0.0*ul
         #gets the back x
-        back_x = -3.0*ul
+        back_x = -3.0*ul # was -3.0 ^^^
         #gets the aileron pocket x
         aileron_pocket_x = -2.0*ul
 
@@ -472,12 +493,12 @@ class DrawQuadplane():
         #inside aileron y
         inside_aileron_y = 3.0*ul
         #outside aileron y
-        outside_aileron_y = 6.0*ul
+        outside_aileron_y = 7.3*ul # was 6.0 ^^^
 
         #top z
-        top_z = -1.0*ul
+        top_z = -0.75*ul # was -1.0 ^^^
         #bottom z
-        bottom_z = 0.0*ul
+        bottom_z = -0.5*ul #was 0.0 ^^^
 
         #creates the points
         points = np.transpose(np.array([[front_x, inside_y, top_z],#point 0
@@ -571,7 +592,7 @@ class DrawQuadplane():
         ul = self.unit_length
         
         #x positions
-        front_x = 0.0*ul
+        front_x = -3.0*ul # was 0.0 ^^^
         back_x = -15.0*ul
         #y positions
         inside_y = -0.25*ul
@@ -628,7 +649,7 @@ class DrawQuadplane():
         ul = self.unit_length
         
         #x positions
-        front_x = 0.0*ul
+        front_x = -3.0*ul # was 0.0 ^^^ 
         back_x = -15.0*ul
         #y positions
         inside_y = -0.25*ul
@@ -686,16 +707,16 @@ class DrawQuadplane():
         ul = self.unit_length
 
         #x coordinates
-        forward_x = 0.0*ul
+        forward_x = -1.8*ul # was 0.0 ^^^
         rear_x = -2.0*ul
 
         #y coordinates
         inside_y = 0.5*ul
-        outside_y = 0.0*ul
+        outside_y = 0.25*ul # was 0.0 ^^^
 
         #z coordinates
         bottom_z = 0.0*ul
-        top_z = 3.0*ul
+        top_z = -3.0*ul # was 3.0 ^^^
 
         #creates the points
         points = np.transpose(np.array([[forward_x, outside_y, bottom_z],#point 0
@@ -747,16 +768,16 @@ class DrawQuadplane():
         ul = self.unit_length
 
         #x coordinates
-        forward_x = 0.0*ul
+        forward_x = -1.8*ul # was 0.0
         rear_x = -2.0*ul
 
         #y coordinates
         inside_y = -0.5*ul
-        outside_y = 0.0*ul
+        outside_y = -0.25*ul
 
         #z coordinates
         bottom_z = 0.0*ul
-        top_z = 3.0*ul
+        top_z = -3.0*ul # was 3.0 ^^^
 
         #creates the points
         points = np.array([[forward_x, outside_y, bottom_z],#point 0
@@ -807,7 +828,7 @@ class DrawQuadplane():
         ul = self.unit_length
 
         #saves the x values
-        front_x = 0.0*ul
+        front_x = -1.8*ul # was 0.0
         back_x = -2.0*ul
         inside_pocket_x = -1.5*ul
         #saves the y values
@@ -816,8 +837,9 @@ class DrawQuadplane():
         right_outside_y = 3.5*ul
         right_pocket_y = 3.0*ul
         #saves the z values
-        top_z = -1.0*ul
-        bottom_z = 0.0*ul
+        SHIFTER = -3.0/2
+        top_z = (-1.0+ SHIFTER)*ul
+        bottom_z = (-0.5 + SHIFTER)*ul # was 0.0 ^^^
 
 
         #creates the points
