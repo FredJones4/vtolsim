@@ -80,7 +80,7 @@ class DrawQuadplane():
 
 
         ################################################################################
-        #left wpar
+        #left spar
         self.leftSparPoints, self.leftSparIndicies, self.leftSpar_meshColors = self.get_left_spar_points()
         #left spar position
         self.leftSparLocation = np.array([[5.0*self.unit_length], [-4.0*self.unit_length], [-0.5*self.unit_length]])
