@@ -160,21 +160,21 @@ class DrawQuadplane():
         window.addItem(self.quad_horizontalStabilizer)        
         ################################################################################
 
-        ################################################################################
-        #cockpit
-        self.cockpitPoints, self.cockpitIndicies, self.cockpitStabilizer_meshColors = self.get_cockpit_points()
-        #position of the horizontal stabilizer
-        self.cockpitLocation = np.array([[-8.0*self.unit_length], [0.0*self.unit_length], [0.0*self.unit_length]])
-        #creates the vertical stabilizer object
-        self.quad_cockpit = self.add_object(self.cockpitPoints,
-                                                           self.cockpitIndicies,
-                                                           self.cockpitStabilizer_meshColors,
-                                                           R_bi,
-                                                           quad_position + R_bi @ self.horizontalStabilizerLocation)
+        # ################################################################################
+        # #cockpit
+        # self.cockpitPoints, self.cockpitIndicies, self.cockpitStabilizer_meshColors = self.get_cockpit_points()
+        # #position of the horizontal stabilizer
+        # self.cockpitLocation = np.array([[-0.0*self.unit_length], [0.0*self.unit_length], [-4.0*self.unit_length]]) #TODO: Test these points
+        # #creates the vertical stabilizer object
+        # self.quad_cockpit = self.add_object(self.cockpitPoints,
+        #                                                    self.cockpitIndicies,
+        #                                                    self.cockpitStabilizer_meshColors,
+        #                                                    R_bi,
+        #                                                    quad_position + R_bi @ self.cockpitLocation) 
 
-        #adds the item
-        window.addItem(self.quad_horizontalStabilizer)        
-        ################################################################################
+        # #adds the item
+        # window.addItem(self.quad_cockpit)        
+        # ################################################################################
 
 
 
@@ -926,3 +926,105 @@ class DrawQuadplane():
         meshColors[27] = self.mygrey4  # bottom
         return points, indicies, meshColors
 
+    # def get_cockpit_points(self):
+
+    #     ul = self.unit_length
+
+    #     #saves the x values
+    #     front_x = -1.8*ul # was 0.0
+    #     back_x = -2.0*ul
+    #     inside_pocket_x = -1.5*ul
+    #     #saves the y values
+    #     left_outside_y = -3.5*ul
+    #     left_pocket_y = -3.0*ul
+    #     right_outside_y = 3.5*ul
+    #     right_pocket_y = 3.0*ul
+    #     #saves the z values
+    #     SHIFTER = -3.0/2
+    #     top_z = (-1.0+ SHIFTER)*ul
+    #     bottom_z = (-0.5 + SHIFTER)*ul # was 0.0 ^^^
+
+
+    #     #creates the points
+    #     points = np.array([[front_x, right_outside_y, top_z],#point 0
+    #                        [back_x, right_outside_y, top_z],#point 1
+    #                        [back_x, right_pocket_y, top_z],#point 2
+    #                        [inside_pocket_x, right_pocket_y, top_z],#point 3
+    #                        [inside_pocket_x, left_pocket_y, top_z],#point 4
+    #                        [back_x, left_pocket_y, top_z],#point 5
+    #                        [back_x, left_outside_y, top_z],#point 6
+    #                        [front_x, left_outside_y, top_z],#point 7
+    #                        [front_x, left_pocket_y, top_z],#point 8
+    #                        [front_x, right_pocket_y, top_z],#point 9
+    #                        [front_x, right_outside_y, bottom_z],#point 10
+    #                        [back_x, right_outside_y, bottom_z],#point 11
+    #                        [back_x, right_pocket_y, bottom_z],#point 12
+    #                        [inside_pocket_x, right_pocket_y, bottom_z],#point 13
+    #                        [inside_pocket_x, left_pocket_y, bottom_z],#point 14
+    #                        [back_x, left_pocket_y, bottom_z],#point 15
+    #                        [back_x, left_outside_y, bottom_z],#point 16
+    #                        [front_x, left_outside_y, bottom_z],#point 17
+    #                        [front_x, left_pocket_y, bottom_z],#point 18
+    #                        [front_x, right_pocket_y, bottom_z]]).T#point 19
+        
+    #     #creates the indicies for the meshes
+    #     indicies = np.array([[0, 1, 2],
+    #                          [0, 2, 9],
+    #                          [3, 4, 9],
+    #                          [4, 8, 9],
+    #                          [5, 6, 8],
+    #                          [6, 7, 8],
+    #                          [10, 11, 12],
+    #                          [10, 12, 19],
+    #                          [13, 14, 19],
+    #                          [14, 18, 19],
+    #                          [15, 16, 18],
+    #                          [16, 17, 18],
+    #                          [0, 1, 11],
+    #                          [0, 10, 11],
+    #                          [1, 2, 11],
+    #                          [2, 11, 12],
+    #                          [2, 3, 12],
+    #                          [3, 12, 13],
+    #                          [3, 4, 13],
+    #                          [4, 13, 14],
+    #                          [4, 5, 14],
+    #                          [5, 14, 15],
+    #                          [5, 6, 15],
+    #                          [5, 15, 16],
+    #                          [6, 7, 16],
+    #                          [7, 16, 17],
+    #                          [0, 7, 17],
+    #                          [0, 17, 10]])
+        
+    #     #creates the mesh colors
+    #     meshColors = np.empty((28, 3, 4), dtype=np.float32)
+    #     meshColors[0] = self.mygrey1  # top
+    #     meshColors[1] = self.mygrey1  # top
+    #     meshColors[2] = self.mygrey1  # top
+    #     meshColors[3] = self.mygrey1  # top
+    #     meshColors[4] = self.mygrey1  # right side
+    #     meshColors[5] = self.mygrey1  # right side
+    #     meshColors[6] = self.mygrey1  # right side
+    #     meshColors[7] = self.mygrey1  # right side
+    #     meshColors[8] = self.mygrey1  # left side
+    #     meshColors[9] = self.mygrey1  # left side
+    #     meshColors[10] = self.mygrey1  # left side
+    #     meshColors[11] = self.mygrey1  # left side
+    #     meshColors[12] = self.mygrey3  # back
+    #     meshColors[13] = self.mygrey3  # back
+    #     meshColors[14] = self.mygrey2  # front top
+    #     meshColors[15] = self.mygrey2  # front top
+    #     meshColors[16] = self.mygrey2  # front middle
+    #     meshColors[17] = self.mygrey2  # front middle
+    #     meshColors[18] = self.mygrey4  # bottom
+    #     meshColors[19] = self.mygrey4  # bottom
+    #     meshColors[20] = self.mygrey4  # bottom
+    #     meshColors[21] = self.mygrey4  # bottom
+    #     meshColors[22] = self.mygrey2  # front middle
+    #     meshColors[23] = self.mygrey2  # front middle
+    #     meshColors[24] = self.mygrey4  # bottom
+    #     meshColors[25] = self.mygrey4  # bottom
+    #     meshColors[26] = self.mygrey4  # bottom
+    #     meshColors[27] = self.mygrey4  # bottom
+    #     return points, indicies, meshColors      
